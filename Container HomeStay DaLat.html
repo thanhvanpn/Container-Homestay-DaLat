@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Container Homestay Đà Lạt - Chạm thiên nhiên trong góc nhỏ độc bản</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-main: #FAF8F5;
+    --bg-card: #FFFFFF;
+    --be-warm: #F3EEE3;
+    --be-gray: #E8E2D5;
+    --text-main: #2D2A26;
+    --text-muted: #6B665E;
+    --gold-warm: #C59B47;
+    --gold-hover: #AF8535;
+    --gold-light: #FBF5E6;
+    --border-color: #E8E1D2;
+    --radius: 16px;
+    --shadow: 0 10px 30px -8px rgba(45, 42, 38, 0.06);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+  body { background-color: var(--bg-main); color: var(--text-main); line-height: 1.6; padding: 15px 8px 50px; }
+  .container { max-width: 1100px; margin: 0 auto; }
+
+  /* Top Bar */
+  .topbar {
+    background: var(--text-main);
+    color: var(--be-warm);
+    font-size: 13px;
+    padding: 8px 16px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .topbar span { color: var(--gold-warm); font-weight: 700; }
+
+  /* Header & Navigation */
+  .brand-header {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    padding: 16px 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 25px;
+    box-shadow: var(--shadow);
+    position: sticky;
+    top: 10px;
+    z-index: 1000;
+  }
+  .brand-logo-wrap { display: flex; align-items: center; gap: 12px; cursor: pointer; }
+  .logo-symbol {
+    width: 44px; height: 44px;
+    background: var(--be-warm);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+  }
+  .brand-title h1 { font-size: 18px; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase; }
+  .brand-title p { font-size: 12px; color: var(--gold-warm); font-weight: 600; }
+
+  /* Multi-page Nav Tabs */
+  .nav-tabs {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    list-style: none;
+    flex-wrap: wrap;
+  }
+  .nav-tab-btn {
+    background: var(--be-warm);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+    padding: 8px 15px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+  .nav-tab-btn:hover { background: var(--gold-light); color: var(--gold-warm); border-color: var(--gold-warm); }
+  .nav-tab-btn.active {
+    background: var(--gold-warm);
+    color: #fff;
+    border-color: var(--gold-warm);
+  }
+  .btn-nav-book {
+    background: var(--text-main) !important;
+    color: #fff !important;
+    border-color: var(--text-main) !important;
+  }
+
+  /* Multi-page Display Control */
+  .tab-page {
+    display: none;
+    animation: fadeIn 0.25s ease-in-out;
+  }
+  .tab-page.active-page { display: block; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Page Headings */
+  .page-header-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-left: 5px solid var(--gold-warm);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 25px;
+    box-shadow: var(--shadow);
+  }
+  .page-header-card h2 { font-size: 20px; font-weight: 800; text-transform: uppercase; margin-bottom: 4px; }
+  .page-header-card p { font-size: 13.5px; color: var(--text-muted); }
+
+  /* Hero Banner */
+  .hero-banner {
+    position: relative;
+    border-radius: var(--radius);
+    overflow: hidden;
+    height: 420px;
+    margin-bottom: 30px;
+    box-shadow: var(--shadow);
+  }
+  .hero-banner img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.9); }
+  .hero-overlay {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: linear-gradient(to top, rgba(30, 26, 20, 0.94) 15%, rgba(30,26,20,0.3) 65%, transparent 100%);
+    padding: 30px;
+    color: #fff;
+  }
+  .hero-tag {
+    display: inline-block;
+    background: var(--gold-warm);
+    color: #fff;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+  .hero-overlay h2 { font-size: 25px; font-weight: 800; margin-bottom: 6px; }
+  .hero-overlay p { font-size: 14px; color: #EAE6DF; max-width: 680px; }
+
+  /* Features Strip */
+  .features-strip {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 15px;
+    margin-bottom: 30px;
+  }
+  .feature-item {
+    background: var(--bg-card);
+    padding: 16px 18px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow);
+    display: flex; align-items: center; gap: 12px;
+  }
+  .feat-icon {
+    font-size: 20px; width: 44px; height: 44px;
+    background: var(--gold-light);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .feat-text h4 { font-size: 13.5px; font-weight: 700; }
+  .feat-text p { font-size: 12px; color: var(--text-muted); }
+
+  /* Grid Layouts */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 22px;
+    margin-bottom: 30px;
+  }
+  .card-box {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    border: 1px solid var(--border-color);
+    padding: 22px;
+    box-shadow: var(--shadow);
+  }
+  .card-box h3 { font-size: 17px; font-weight: 700; margin-bottom: 12px; border-bottom: 1px solid var(--be-warm); padding-bottom: 8px; }
+
+  /* Rooms Grid */
+  .rooms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+    margin-bottom: 30px;
+  }
+  .room-card {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    display: flex; flex-direction: column;
+    transition: transform 0.2s ease;
+  }
+  .room-card:hover { transform: translateY(-3px); }
+  .room-img-wrap { height: 230px; width: 100%; position: relative; }
+  .room-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+  .room-badge {
+    position: absolute; top: 12px; right: 12px;
+    background: rgba(45, 42, 38, 0.85);
+    color: #fff; padding: 4px 10px; border-radius: 6px;
+    font-size: 11px; font-weight: 600; backdrop-filter: blur(4px);
+  }
+  .room-body { padding: 20px; flex: 1; display: flex; flex-direction: column; }
+  .room-name { font-size: 17px; font-weight: 700; margin-bottom: 4px; }
+  .room-meta { font-size: 12.5px; color: var(--gold-warm); font-weight: 700; margin-bottom: 10px; }
+  .room-desc { font-size: 13px; color: var(--text-muted); margin-bottom: 14px; line-height: 1.5; }
+  .room-amenities { list-style: none; margin-bottom: 18px; font-size: 12.5px; color: var(--text-muted); }
+  .room-amenities li { margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+  .room-foot {
+    margin-top: auto; display: flex; justify-content: space-between;
+    align-items: center; padding-top: 14px; border-top: 1px solid var(--be-warm);
+  }
+  .room-rate { font-size: 19px; font-weight: 800; color: var(--gold-warm); }
+  .room-rate span { font-size: 12px; font-weight: 400; color: var(--text-muted); }
+  .btn-book-now {
+    background: var(--be-warm);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+  .btn-book-now:hover { background: var(--gold-warm); color: white; border-color: var(--gold-warm); }
+
+  /* Tables */
+  .custom-table {
+    width: 100%; border-collapse: collapse; background: #fff;
+    border-radius: 10px; overflow: hidden; border: 1px solid var(--border-color);
+    font-size: 13.5px; margin-bottom: 20px;
+  }
+  .custom-table th {
+    background: var(--be-warm); color: var(--text-main);
+    padding: 12px 14px; font-weight: 700; text-align: left;
+    border-bottom: 1px solid var(--border-color);
+  }
+  .custom-table td { padding: 12px 14px; border-bottom: 1px solid var(--be-warm); vertical-align: top; }
+  .custom-table tr:last-child td { border-bottom: none; }
+
+  /* Booking & Payment Engine */
+  .booking-section {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    border: 1px solid var(--border-color);
+    padding: 26px;
+    box-shadow: var(--shadow);
+    margin-bottom: 30px;
+  }
+  .form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .input-group { display: flex; flex-direction: column; gap: 6px; }
+  .input-group label { font-size: 13px; font-weight: 700; color: var(--text-main); }
+  .input-control {
+    width: 100%; padding: 11px 12px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-main);
+    border-radius: 8px;
+    font-size: 13.5px;
+    color: var(--text-main);
+    outline: none;
+  }
+  .input-control:focus { border-color: var(--gold-warm); background: #fff; }
+
+  /* Bill Summary */
+  .bill-card {
+    background: var(--be-warm);
+    border-radius: 10px;
+    padding: 16px 20px;
+    border: 1px solid var(--be-gray);
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 10px;
+    margin-bottom: 20px;
+  }
+  .bill-desc { font-size: 13.5px; color: var(--text-muted); }
+  .bill-total { font-size: 21px; font-weight: 800; color: var(--gold-warm); }
+
+  .btn-action-pay {
+    width: 100%;
+    background: var(--gold-warm);
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+  .btn-action-pay:hover { background: var(--gold-hover); }
+
+  /* QR Modal */
+  .modal-layer {
+    display: none; position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.65);
+    z-index: 99999;
+    justify-content: center; align-items: center;
+    padding: 15px;
+  }
+  .modal-window {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    max-width: 440px; width: 100%;
+    padding: 25px; text-align: center;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+    border: 1px solid var(--border-color);
+  }
+  .modal-tag {
+    display: inline-block; background: var(--gold-light);
+    color: var(--gold-warm); padding: 4px 12px;
+    border-radius: 20px; font-size: 11px; font-weight: 700; margin-bottom: 8px;
+  }
+  .qr-frame {
+    background: #fff; padding: 10px; border-radius: 12px;
+    border: 1px solid var(--border-color);
+    display: inline-block; margin: 12px 0;
+  }
+  .qr-frame img { width: 210px; height: 210px; display: block; }
+  .code-badge {
+    background: var(--be-warm); color: var(--gold-warm);
+    font-weight: 700; font-size: 13px; padding: 4px 12px;
+    border-radius: 6px; display: inline-block; margin-bottom: 10px;
+  }
+  .note-text { font-size: 12px; color: var(--text-muted); line-height: 1.5; margin-bottom: 16px; text-align: left; }
+  .btn-dismiss {
+    background: var(--be-warm); color: var(--text-main);
+    border: 1px solid var(--border-color);
+    padding: 8px 22px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer;
+  }
+
+  /* Footer */
+  footer {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-top: 35px;
+    font-size: 13px;
+    color: var(--text-muted);
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Top Notification Bar -->
+  <div class="topbar">
+    <div>🌿 Container Homestay Đà Lạt • Nghỉ dưỡng tái sinh giữa đồi thông</div>
+    <div>Hotline / Zalo: <span>0353048990</span> | Check-in: 14h00</div>
+  </div>
+
+  <!-- Top Navigation & Brand Header -->
+  <header class="brand-header">
+    <div class="brand-logo-wrap" onclick="switchPage('home')">
+      <div class="logo-symbol">🌿</div>
+      <div class="brand-title">
+        <h1>Container Homestay Đà Lạt</h1>
+        <p>Chạm thiên nhiên trong góc nhỏ độc bản</p>
+      </div>
+    </div>
+    <ul class="nav-tabs">
+      <li><button class="nav-tab-btn active" onclick="switchPage('home')">Tổng Quan</button></li>
+      <li><button class="nav-tab-btn" onclick="switchPage('rooms')">Hạng Phòng</button></li>
+      <li><button class="nav-tab-btn" onclick="switchPage('experience')">Dịch Vụ & BBQ</button></li>
+      <li><button class="nav-tab-btn" onclick="switchPage('guide')">Cẩm Nang & Nội Quy</button></li>
+      <li><button class="nav-tab-btn btn-nav-book" onclick="switchPage('booking')">Đặt Phòng & VietQR</button></li>
+    </ul>
+  </header>
+
+  <!-- ==================== TRANG 1: TỔNG QUAN ==================== -->
+  <main id="page-home" class="tab-page active-page">
+    <!-- Hero Banner -->
+    <div class="hero-banner">
+      <img src="https://lh3.googleusercontent.com/d/1WPiM0Tb7fGO3LWbCpQBdzl7xQwHPT4og" alt="Container Homestay kết cấu thép thật giữa đồi thông Đà Lạt">
+      <div class="hero-overlay">
+        <span class="hero-tag">Đà Lạt • Green Upcycle Stay</span>
+        <h2>Tổ ấm bình yên từ khối thép container giữa thung lũng thông reo</h2>
+        <p>Thức giấc giữa làn sương sớm phố núi, ngắm bình minh qua vách kính Panorama từ trong phòng container ấm áp và quây quần bên bếp than BBQ tối se lạnh.</p>
+      </div>
+    </div>
+
+    <!-- Key Highlights -->
+    <div class="features-strip">
+      <div class="feature-item">
+        <div class="feat-icon">🏗️</div>
+        <div class="feat-text">
+          <h4>Vỏ Thùng Thép Corten</h4>
+          <p>Gân sóng container tái sinh độc bản, kiên cố</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feat-icon">🪵</div>
+        <div class="feat-text">
+          <h4>Nội Thất Gỗ Thông Ấm</h4>
+          <p>Phun PU Foam cách âm, cách nhiệt đa lớp</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feat-icon">🔥</div>
+        <div class="feat-text">
+          <h4>Tiệc Nướng BBQ Đêm</h4>
+          <p>Bếp than hoa, bàn pallet & ánh đèn sương</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feat-icon">🌄</div>
+        <div class="feat-text">
+          <h4>Kính Tràn Panorama</h4>
+          <p>View trọn đồi thông & thung lũng săn mây</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Giới thiệu câu chuyện container -->
+    <div class="grid-2">
+      <div class="card-box">
+        <h3>Kiến Trúc Tái Sinh Bền Vững (Upcycle Living)</h3>
+        <p style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 12px;">
+          Từng là những khối container vận chuyển hàng hải băng qua đại dương, chúng tôi tái cấu trúc chúng thành những căn phòng nghỉ dưỡng ấm cúng với đầy đủ tiện nghi tiêu chuẩn khách sạn.
+        </p>
+        <ul style="font-size: 13px; color: var(--text-muted); padding-left: 18px; line-height: 1.8;">
+          <li>Lớp cách nhiệt PU Foam mật độ cao 50mm loại bỏ hoàn toàn tiếng mưa rào và giữ ấm đêm đông.</li>
+          <li>100% gỗ thông tự nhiên ốp tường tạo mùi hương thơm dịu thư thái tinh thần.</li>
+          <li>Hạn chế tối đa bê tông hóa, giữ nguyên thảm thực vật tự nhiên và đồi cỏ nguyên sinh.</li>
+        </ul>
+      </div>
+
+      <div class="card-box">
+        <h3>Không Gian Kết Nối & Thư Giãn</h3>
+        <p style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 12px;">
+          Mỗi góc tại homestay đều được chăm chút để mang lại sự tĩnh tại, tách biệt hoàn toàn khỏi nhịp sống vội vã nơi phố thị.
+        </p>
+        <ul style="font-size: 13px; color: var(--text-muted); padding-left: 18px; line-height: 1.8;">
+          <li>Hiên gỗ đón sương sáng sớm thưởng thức cà phê Cầu Đất nguyên chất.</li>
+          <li>Khu vực sinh hoạt chung với kệ sách nghệ thuật và đàn acoustic giao lưu ban tối.</li>
+          <li>Bãi đậu xe rộng rãi, nhân viên hỗ trợ mang vác hành lý và định vị bản đồ 24/7.</li>
+        </ul>
+      </div>
+    </div>
+  </main>
+
+  <!-- ==================== TRANG 2: HẠNG PHÒNG ==================== -->
+  <main id="page-rooms" class="tab-page">
+    <div class="page-header-card">
+      <h2>Hạng Phòng Nghỉ Dưỡng Container</h2>
+      <p>Thiết kế tinh tế kết hợp giữa chất thép công nghiệp mạnh mẽ và nội thất gỗ mộc mạc ấm cúng.</p>
+    </div>
+
+    <div class="rooms-grid">
+      <!-- Căn 1: 20ft Eco -->
+      <div class="room-card">
+        <div class="room-img-wrap">
+          <img src="https://lh3.googleusercontent.com/d/1J3tk4PZqAvBhr53VysgkoOM2DNfvxTLd" alt="Nội thất phòng ngủ container homestay Đà Lạt">
+          <span class="room-badge">Container 20ft • 2 Khách</span>
+        </div>
+        <div class="room-body">
+          <h4 class="room-name">Chill Box Eco (Container 20ft)</h4>
+          <div class="room-meta">Nội thất ốp gỗ thông & Vách kính đồi thông</div>
+          <p class="room-desc">Mặt trong giữ điểm nhấn vách sóng thép sơn be, ốp gỗ thông tự nhiên cách âm, đệm lò xo túi Everon 20cm, điều hòa 2 chiều sưởi ấm, toilet khép kín và vách kính view thẳng ra đồi thông mù sương.</p>
+          <ul class="room-amenities">
+            <li>✓ Vách kính Panorama ngắm trọn bình minh thung lũng</li>
+            <li>✓ Miễn phí trà Atiso nóng & Cà phê phin đón sương</li>
+            <li>✓ Sân hiên riêng với bếp than nướng BBQ tối</li>
+          </ul>
+          <div class="room-foot">
+            <div class="room-rate">550.000đ <span>/ đêm</span></div>
+            <button class="btn-book-now" onclick="pickRoom('eco', 550000)">Chọn phòng này</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Căn 2: 40ft Family -->
+      <div class="room-card">
+        <div class="room-img-wrap">
+          <img src="https://lh3.googleusercontent.com/d/1WPiM0Tb7fGO3LWbCpQBdzl7xQwHPT4og" alt="Ngoại thất căn Container Family Suite giữa đồi thông">
+          <span class="room-badge">Container 40ft HC • 4 Khách</span>
+        </div>
+        <div class="room-body">
+          <h4 class="room-name">Family Suite (Container 40ft HC)</h4>
+          <div class="room-meta">Kết cấu thùng container thật & Sân hiên BBQ</div>
+          <p class="room-desc">Vỏ thùng container nguyên bản với cửa khóa container đặc trưng, hiên gỗ thư giãn ngắm sao đêm, phòng khách rộng rãi, bồn tắm ngâm thảo mộc và khoảng sân vườn riêng an toàn cho trẻ nhỏ.</p>
+          <ul class="room-amenities">
+            <li>✓ Không gian sinh hoạt gia đình + Bàn ăn gỗ tự nhiên</li>
+            <li>✓ Tặng kèm 1kg than hoa nướng BBQ & lò than ngoài trời</li>
+            <li>✓ Bãi đỗ xe ô tô thuận tiện, máy sưởi ấm toàn phòng</li>
+          </ul>
+          <div class="room-foot">
+            <div class="room-rate">950.000đ <span>/ đêm</span></div>
+            <button class="btn-book-now" onclick="pickRoom('family', 950000)">Chọn phòng này</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ==================== TRANG 3: DỊCH VỤ & BBQ ==================== -->
+  <main id="page-experience" class="tab-page">
+    <div class="page-header-card">
+      <h2>Dịch Vụ Trải Nghiệm & Ẩm Thực Bản Địa</h2>
+      <p>Những bữa tiệc nướng thơm lừng trong tiết trời se lạnh cùng các tiện ích hỗ trợ chu đáo cho chuyến đi.</p>
+    </div>
+
+    <table class="custom-table">
+      <thead>
+        <tr>
+          <th>Dịch Vụ</th>
+          <th>Mô Tả Tiện Ích</th>
+          <th>Chi Phí Tham Khảo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Combo BBQ Sương Đêm</strong></td>
+          <td>Thịt ba chỉ ướp sốt bản địa, bò cuộn nấm kim châm, chân gà quái thú, khoai lang nướng mật ong và rau tươi Đà Lạt.</td>
+          <td><strong>180.000đ / người</strong> (Bao gồm lò nướng & than)</td>
+        </tr>
+        <tr>
+          <td><strong>Thuê Bếp Nấu Ăn Tự Do</strong></td>
+          <td>Tự do sử dụng gian bếp chung với tủ lạnh, lò vi sóng, bát đũa và gia vị cơ bản (tự rửa dọn sau dùng).</td>
+          <td><strong>Miễn Phí</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Thuê Xe Máy Vi Vu</strong></td>
+          <td>Xe tay ga / xe số đời mới tiết kiệm xăng, trang bị sẵn 02 nón bảo hiểm và 02 áo mưa tiện lợi.</td>
+          <td><strong>120.000đ – 150.000đ / ngày</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Đốt Lửa Trại Quây Quần</strong></td>
+          <td>Củi gỗ thông thơm cháy đượm, khoai bắp nướng và trà gừng nóng giữa thung lũng sương lạnh.</td>
+          <td><strong>120.000đ / bó củi lớn</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </main>
+
+  <!-- ==================== TRANG 4: CẨM NANG & NỘI QUY ==================== -->
+  <main id="page-guide" class="tab-page">
+    <div class="page-header-card">
+      <h2>Quy Định Lưu Trú & Cẩm Nang Du Khách</h2>
+      <p>Một số lưu ý nhỏ giúp kỳ nghỉ của bạn tại Đà Lạt thêm phần trọn vẹn và an yên.</p>
+    </div>
+
+    <div class="grid-2">
+      <div class="card-box">
+        <h3>Thời Gian & Quy Định Phòng</h3>
+        <ul style="font-size: 13px; color: var(--text-muted); padding-left: 18px; line-height: 1.8;">
+          <li><strong>Giờ nhận phòng:</strong> Sau 14:00 (hỗ trợ nhận sớm miễn phí nếu phòng có sẵn).</li>
+          <li><strong>Giờ trả phòng:</strong> Trước 12:00 trưa hôm sau.</li>
+          <li><strong>Giữ yên tĩnh:</strong> Sau 22h00 đêm để đảm bảo giấc ngủ thư thái cho các căn lân cận.</li>
+          <li><strong>Bảo vệ môi trường:</strong> Tắt bình nước nóng và điều hòa khi rời khỏi container.</li>
+        </ul>
+      </div>
+
+      <div class="card-box">
+        <h3>Tips Săn Mây & Vi Vu Gần Homestay</h3>
+        <ul style="font-size: 13px; color: var(--text-muted); padding-left: 18px; line-height: 1.8;">
+          <li><strong>Thời điểm săn mây đẹp nhất:</strong> 05h15 – 06h30 sáng ngay trước vách kính phòng ngủ.</li>
+          <li><strong>Chuẩn bị trang phục:</strong> Nhiệt độ đêm Đà Lạt có thể xuống 13°C – 15°C, hãy mang theo áo khoác ấm.</li>
+          <li>Cách chợ đêm Đà Lạt 12 phút di chuyển, gần đồi chè Cầu Đất và các quán cà phê ngắm hoàng hôn.</li>
+        </ul>
+      </div>
+    </div>
+  </main>
+
+  <!-- ==================== TRANG 5: ĐẶT PHÒNG & VIETQR ==================== -->
+  <main id="page-booking" class="tab-page">
+    <div class="page-header-card">
+      <h2>Kiểm Tra Lịch Trống & Đặt Phòng Trực Tiếp</h2>
+      <p>Xác nhận giữ phòng nhanh chóng, minh bạch thông qua cổng quét mã VietQR tự động.</p>
+    </div>
+
+    <div class="booking-section">
+      <div class="form-row">
+        <div class="input-group">
+          <label>Hạng phòng lựa chọn</label>
+          <select class="input-control" id="roomSelect" onchange="updateCalculations()">
+            <option value="eco" data-price="550000">Chill Box Eco (20ft) - 550.000đ/đêm</option>
+            <option value="family" data-price="950000">Family Suite (40ft) - 950.000đ/đêm</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>Ngày nhận phòng</label>
+          <input type="date" class="input-control" id="startDate" onchange="updateCalculations()">
+        </div>
+        <div class="input-group">
+          <label>Ngày trả phòng</label>
+          <input type="date" class="input-control" id="endDate" onchange="updateCalculations()">
+        </div>
+        <div class="input-group">
+          <label>Số điện thoại / Zalo nhận xác nhận</label>
+          <input type="tel" class="input-control" id="clientPhone" placeholder="Ví dụ: 0353048990">
+        </div>
+      </div>
+
+      <!-- Tóm tắt chi phí -->
+      <div class="bill-card">
+        <div class="bill-desc" id="billNote">Đang tính toán chi phí lưu trú...</div>
+        <div class="bill-total" id="totalPriceTag">0 VNĐ</div>
+      </div>
+
+      <button class="btn-action-pay" onclick="handleCheckout()">
+        Tạo Mã VietQR Thanh Toán & Giữ Phòng
+      </button>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p><b>Container Homestay Đà Lạt</b> • Địa chỉ: Đồi Thông Dã Quỳ, Phường 11, TP. Đà Lạt</p>
+    <p style="margin-top: 6px;">Hotline hỗ trợ & Đặt tiệc BBQ: 0353048990 • Bản quyền dự án Homestay Sinh Thái 2026</p>
+  </footer>
+</div>
+
+<!-- Modal Popup Thanh toán VietQR -->
+<div class="modal-layer" id="checkoutModal">
+  <div class="modal-window">
+    <span class="modal-tag">VietQR Napas247</span>
+    <h3 style="margin-bottom: 4px;">Quét Mã Thanh Toán Giữ Phòng</h3>
+    <div class="code-badge" id="orderIdText">Mã đơn: DL-XXXX</div>
+
+    <div class="qr-frame">
+      <img id="vietQrImg" src="" alt="Mã thanh toán VietQR">
+    </div>
+
+    <p class="note-text">
+      * Hệ thống tự động điền sẵn <b>Số tiền</b> và <b>Nội dung chuyển khoản</b>.<br>
+      Lễ tân sẽ liên hệ gửi xác nhận phòng và định vị Google Maps qua SĐT/Zalo ngay khi nhận được thanh toán.
+    </p>
+
+    <button class="btn-dismiss" onclick="dismissModal()">Đóng Cửa Sổ</button>
+  </div>
+</div>
+
+<script>
+  // Cấu hình ngân hàng VietQR
+  const MY_BANK = "MB";
+  const MY_ACCOUNT = "0353048990";
+  const MY_ACCOUNT_NAME = "CONTAINER HOMESTAY DA LAT";
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    document.getElementById('startDate').value = today.toISOString().split('T')[0];
+    document.getElementById('endDate').value = tomorrow.toISOString().split('T')[0];
+    updateCalculations();
+  });
+
+  // Chuyển trang mượt mà
+  function switchPage(pageId) {
+    const pages = document.querySelectorAll('.tab-page');
+    pages.forEach(p => p.classList.remove('active-page'));
+
+    const buttons = document.querySelectorAll('.nav-tab-btn');
+    buttons.forEach(b => b.classList.remove('active'));
+
+    const targetPage = document.getElementById('page-' + pageId);
+    if (targetPage) {
+      targetPage.classList.add('active-page');
+    }
+
+    const activeBtn = Array.from(buttons).find(b => b.getAttribute('onclick').includes(pageId));
+    if (activeBtn) {
+      activeBtn.classList.add('active');
+    }
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function pickRoom(type, price) {
+    document.getElementById('roomSelect').value = type;
+    updateCalculations();
+    switchPage('booking');
+  }
+
+  function updateCalculations() {
+    const start = new Date(document.getElementById('startDate').value);
+    const end = new Date(document.getElementById('endDate').value);
+    const select = document.getElementById('roomSelect');
+    const price = parseInt(select.options[select.selectedIndex].getAttribute('data-price'));
+
+    if (end <= start) {
+      document.getElementById('billNote').innerText = "Ngày trả phòng phải sau ngày nhận ít nhất 1 đêm.";
+      document.getElementById('totalPriceTag').innerText = "0 VNĐ";
+      return 0;
+    }
+
+    const nights = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
+    const total = nights * price;
+
+    document.getElementById('billNote').innerHTML = `Lưu trú <b>${nights} đêm</b> tại Container Homestay Đà Lạt (${select.options[select.selectedIndex].text.split('-')[0].trim()})`;
+    document.getElementById('totalPriceTag').innerText = total.toLocaleString('vi-VN') + " VNĐ";
+    return total;
+  }
+
+  function handleCheckout() {
+    const sum = updateCalculations();
+    const phone = document.getElementById('clientPhone').value.trim();
+
+    if (sum <= 0) {
+      alert("Vui lòng chọn ngày nhận và ngày trả phòng hợp lệ!");
+      return;
+    }
+    if (!phone || phone.length < 9) {
+      alert("Vui lòng cung cấp Số điện thoại hoặc Zalo để nhân viên gửi thông tin phòng!");
+      document.getElementById('clientPhone').focus();
+      return;
+    }
+
+    const bookingCode = 'DL' + Math.floor(1000 + Math.random() * 9000);
+    const content = `${bookingCode} ${phone}`;
+    const qrLink = `https://img.vietqr.io/image/${MY_BANK}-${MY_ACCOUNT}-compact2.png?amount=${sum}&addInfo=${encodeURIComponent(content)}&accountName=${encodeURIComponent(MY_ACCOUNT_NAME)}`;
+
+    document.getElementById('orderIdText').innerText = `Mã đơn: ${bookingCode}`;
+    document.getElementById('vietQrImg').src = qrLink;
+    document.getElementById('checkoutModal').style.display = 'flex';
+  }
+
+  function dismissModal() {
+    document.getElementById('checkoutModal').style.display = 'none';
+  }
+</script>
+
+</body>
+</html>
